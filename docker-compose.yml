@@ -3,3 +3,13 @@ services:
     image: redis:7
     ports:
       - "6379:6379"
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_PASSWORD: rhubpass
+    ports:
+      - "5432:5432"
+  cassandra:
+    image: cassandra:5
+    ports:
+      - "9042:9042"
