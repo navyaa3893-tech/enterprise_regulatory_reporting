@@ -1,0 +1,11 @@
+{
+    "trade_id":1818829383,
+    "event_type":"New", 
+    "direction":"buy", 
+    "timestamp":"2026-06-21T10:30:00Z", 
+    "instrument":"stock_name", 
+    "quantity":128, "price":29, 
+    "currency":"USD", 
+    "reporting_party":"John carpentar",
+    "counterparty": "william keave"
+}  

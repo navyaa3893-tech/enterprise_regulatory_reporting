@@ -1,0 +1,67 @@
+=== MINIRHUB PROGRESS SNAPSHOT ===
+
+Date: 2026-06-21
+
+Current Phase:   Phase 0 - Foundations (Block 1)
+
+Current Task:    Day 1 - Stack up
+
+Status:          DONE ✅
+
+DONE SO FAR:
+- Installed/verified Docker, Docker Compose, Git, Python 3.12, pytest
+- Project at E:\files\RHUB; git init; pushed to GitHub
+  (navyaa3893-tech/enterprise_regulatory_reporting)
+- docker-compose.yml brings up all six in ONE command:
+  redis, postgres, cassandra, rabbitmq, kafka, configdb (Comdb2 stand-in)
+- Health-check test (tests/test_stack_health.py) knocks on all six ports;
+  watched it go green -> red -> green
+- Added .gitignore (ignores Python cache junk)
+- CI skeleton (.github/workflows/ci.yml) -> green check on GitHub
+
+NEXT STEP (Day 2 - Canonical model):
+- Design the canonical trade JSON schema (the ONE shape all trades become)
+- Lifecycle event types: New / Modify / Cancel / Correction
+- Schema-validation unit tests
+- Write the first ADRs (incl. the Comdb2 -> Postgres decision)
+
+KEY DECISIONS WE MADE:
+- Build incrementally (one machine at a time)
+- Kafka single-node KRaft, replication factors = 1 ("team of one")
+- Substituted Comdb2 with a 2nd Postgres ("configdb") for reliability
+- configdb uses host port 5433 (5432 taken by main postgres)
+- Day-1 CI is a skeleton (sanity test); later CI will start the stack
+
+THINGS I LEARNED:
+- Images vs containers (recipe vs baked cake)
+- Ports + outside:inside (host:container) mapping (houses on a street)
+- YAML structure/indentation, comments (#), env mapping vs list style
+- Git: add/commit/push, fixing GitHub login mismatch, .gitignore, rm --cached
+- Reading container logs to debug; exit codes (0 = happy, 1 = error)
+- First Python: dict, def, try/except, socket connect, for-loop, assert,
+  f-strings
+- pytest basics; "test your test" (green -> red -> green)
+- What `python -m pytest -v` means (-m = run a module, -v = verbose)
+- CI / GitHub Actions basics
+
+WHERE I GOT STUCK / OPEN QUESTIONS:
+- GitHub login mismatch -> fixed by clearing the cached credential
+- outside vs inside ports -> now understood
+- (nothing open right now)
+
+MY SKILL NOTES (for the tutor):
+- True beginner; learns best from stories/analogies and the "why" first
+- Simple English, short sentences
+- Wants to write the code himself -> give HINTS, not full code
+- Brand new to Docker/YAML/Git/Kafka/Python (all learned on Day 1)
+- Asks excellent "why" questions; remind to explain his reasoning
+
+FILES I HAVE WRITTEN:
+- docker-compose.yml
+- tests/test_stack_health.py
+- tests/test_sanity.py
+- .gitignore
+- .github/workflows/ci.yml
+- README.md
+
+=================================
