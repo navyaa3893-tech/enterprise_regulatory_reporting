@@ -1,0 +1,16 @@
+{
+    "type":"object",
+    "properties": {
+    "trade_id":{"type":"string"},
+    "event_type":{"type":"string", "enum": ["New", "Modify", "Cancel", "Correction"]}, 
+    "direction":{"type":"string", "enum": ["buy","sell"]}, 
+    "timestamp":{"type":"string"}, 
+    "instrument":{"type":"string"}, 
+    "quantity":{"type":"number"}, 
+    "price":{"type":"number"}, 
+    "currency":{"type":"string"}, 
+    "reporting_party":{"type":"string"},
+    "counterparty": {"type":"string"}
+    },
+    "required": ["trade_id","event_type","direction","timestamp","instrument","quantity","price","currency","reporting_party","counterparty"]
+}
