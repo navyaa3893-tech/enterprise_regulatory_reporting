@@ -1,0 +1,37 @@
+# ADR 0001: Use event sourcing (append-only log) for trade history
+
+## Status
+Accepted
+
+## Context
+A trade is not frozen the moment it is made. Over its life many things can
+happen to it: New, Modify, Cancel, Correction. A regulator can ask us to
+show everything that ever happened to a trade.
+
+If we store trades the "whiteboard" way (overwrite the old version with the
+new one), the old history is erased. We would not be able to prove what the
+trade looked like before, or see where something went wrong. For a regulated
+system, losing that history is not acceptable.
+
+## Decision
+We will use event sourcing with an append-only log. Every change to a trade
+is stored as a new event added to the end of the log. We never erase or
+overwrite past events. The current state of a trade is all of its events
+folded together (like a bank passbook, where the balance is all the lines
+added up).
+
+## Consequences
+
+Gains:
+- Audit: the event log is itself the proof of history.
+- Reconstruction: we can replay the events to rebuild a trade at any past moment.
+- Replay: we can re-run a trade through the pipeline the same way every time.
+- Reconciliation: we can compare two event streams to catch mismatches.
+
+Cost:
+- Keeping every event forever uses more storage than overwriting would.
+
+## Notes
+The actual event log is not built yet. It is built later (Day 22, in
+Cassandra). This ADR records the decision now, before building, so the
+reason is written down early.

@@ -65,3 +65,72 @@ FILES I HAVE WRITTEN:
 - README.md
 
 =================================
+
+=== MINIRHUB PROGRESS SNAPSHOT ===
+
+Date: 2026-06-23
+
+Current Phase:   Phase 1 - Canonical model (Block 1, Day 2)
+
+Current Task:    Day 2 - Canonical model + schema validation + first ADR
+
+Status:          DONE (core milestone hit) ✅
+                 (optional extras carried forward - see NEXT STEP)
+
+DONE SO FAR:
+- Designed the canonical trade model myself (identity, economics,
+  parties, lifecycle event_type)
+- Learned the 4 lifecycle events: New / Modify / Cancel / Correction
+- Wrote rhub-core/sample_trade.json - a valid canonical trade
+- Wrote rhub-core/trade.schema.json - JSON Schema with required + type + enum
+- Wrote validate.py using the jsonschema library
+- PROVED it: good trade -> "passed"; bad trade ("banana") -> rejected by enum;
+  caught + fixed a real type bug (trade_id number vs string)
+- Wrote first ADR: docs/adr/0001-event-sourcing.md (passbook decision)
+
+NEXT STEP (small carry-over, then Day 3):
+- (optional) turn validate.py into a proper pytest unit test
+- (optional) more ADRs later: datastore choices, message envelope,
+  Kafka-vs-RabbitMQ split
+- Day 3 = Operating model: repo layout (/services /libs /docs etc.),
+  branch protection, PR template, project board
+
+KEY DECISIONS WE MADE:
+- Canonical model = the ONE internal shape (hub-and-spoke)
+- Event sourcing / append-only log (keep every event, never erase) -> ADR 0001
+- trade_id stored as STRING (IDs aren't for maths; can have letters/zeros)
+- Schema validation = the "door check" before a trade enters
+
+THINGS I LEARNED:
+- Canonical model (hub vs spokes); validation vs reference-check are different
+- Modify (reality changed) vs Correction (record was wrong) - same field, diff event
+- Event sourcing: current state = all events folded together (like a passbook)
+- JSON basics: keys/values, quotes for text, numbers no quotes, commas
+- JSON Schema: type, properties, required, enum (menu vs choice)
+- "valid JSON" =/= "valid schema"; a test must FAIL once to be trusted
+- Reading a validation error to find the exact broken field
+
+WHERE I GOT STUCK / OPEN QUESTIONS:
+- First time writing a .py file from scratch + first ADR felt confusing ->
+  fixed by breaking into tiny one-line steps / 4 plain questions
+- small bugs: dot vs underscore in a filename; copied example values into enum
+- Good question I asked: "we haven't actually stored anything yet, right?" -> correct;
+  the real event log is built Day 22 (Cassandra). ADR records the decision early.
+
+MY SKILL NOTES (for the tutor):
+- True beginner; learns best from stories/analogies, "why" first, ONE tiny step at a time
+- Prefers simple English, short sentences; uses voice input (expect speech-style text)
+- Reasons very well when guided (chose string-for-IDs + event sourcing himself)
+- Writing design docs is a new, separate skill - scaffold it with plain questions
+- IMPORTANT: I write all code; tutor only hints (slipped once on validate.py - corrected)
+
+FILES I HAVE WRITTEN:
+- rhub-core/sample_trade.json
+- rhub-core/trade.schema.json
+- validate.py
+- docs/adr/0001-event-sourcing.md
+(from Day 1: docker-compose.yml, tests/test_stack_health.py,
+ .github/workflows/ci.yml, .gitignore, README.md)
+
+=================================
+
