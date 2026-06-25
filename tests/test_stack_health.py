@@ -1,4 +1,6 @@
 import socket
+import pytest
+
 
 def is_reachable(port):
     try:
@@ -16,6 +18,7 @@ services = {
     "configdb": 5433
 }
 
+@pytest.mark.integration
 def test_all_services_reachable():
     for name, port in services.items():
         assert is_reachable(port), f"{name} (port {port} is not reachable)"
