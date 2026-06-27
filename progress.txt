@@ -134,3 +134,55 @@ FILES I HAVE WRITTEN:
 
 =================================
 
+=== MINIRHUB PROGRESS SNAPSHOT ===
+Date: 2026-06-25
+
+Current Phase:   Operating model - Block 1, Day 3
+
+Current Task:    Day 3 - Operating model (nearly complete)
+
+Status:          DONE (core) - only project board/labels + first RFC remain (light)
+
+DONE SO FAR (Day 3):
+- Repo layout built: services/ libs/ docs/ tools/ regulatory/ (files moved into rooms)
+- Branch protection on main COMPLETE: PR required + required CI check `test`; approvals=0 (solo); no-bypass
+- Proved the lock (direct push rejected); ran THREE full PR cycles end-to-end
+- Fixed a real CI failure: tagged stack test @pytest.mark.integration, registered in pytest.ini,
+  CI runs `python -m pytest tests/ -v -m "not integration"`, triggers on push + pull_request, runs all tests
+- Added CODEOWNERS (.github/CODEOWNERS = * @navyaa3893-tech)
+- Added PR template (.github/pull_request_template.md: Summary / Reason / Testing / Risks)
+- Added issue templates (.github/ISSUE_TEMPLATE/bug_report.md + feature_request.md)
+- Cleaned up stray root CODEOWNERS created by a bad `mv`
+
+NEXT STEP (finish Day 3, then Day 4):
+- Project board: Backlog -> Ready -> In Progress -> In Review -> Done (GitHub Projects, click-only)
+- Add meaningful labels (bug, infra, phase-0, incident)
+- WRITE FIRST RFC (design-before-build doc; like an ADR but for a proposal) - do this fresh
+- Housekeeping: unify git identity (navyaa3893-tech vs navyaa2398); confirm .gitignore ignores __pycache__
+- Day 4 = Observability skeleton (/health + /metrics, first Grafana dashboard, structured logs + correlation_id, first incident drill)
+
+THINGS I LEARNED (Day 3):
+- unit vs integration tests; a correct test can fail in CI because the ENVIRONMENT differs
+- pytest markers: tag + register in pytest.ini + select/skip with -m "not <tag>"
+- two different -m: python -m pytest (run module) vs pytest -m (select by marker)
+- git: rename-detection on move; push=up/pull=down; pull AFTER web-merge; -d safe delete
+- branch protection = process gate vs CI = content gate; CODEOWNERS = required reviewers by file
+- PR template / issue templates = forms so every change/ticket explains itself
+- gotchas: forgot Ctrl+S -> "nothing to commit"; Notepad adds .txt -> use "All Files"; `mv` needs TWO paths
+
+MY SKILL NOTES (for the tutor):
+- True beginner; story-first, "why" first, ONE tiny line at a time; voice input
+- Strong reasoning + predict-then-test; tires of low-value boilerplate (templates) -> for pure
+  config/boilerplate it's OK to hand exact shapes and keep the WHY as the learning check
+- Real coding/logic he must write himself; needs Ctrl+S + "All Files" reminders
+- I WRITE ALL CODE/LOGIC; tutor only hints
+
+FILES WRITTEN/CHANGED (Day 3):
+- folders: services/ libs/ tools/ regulatory/
+- moved: libs/rhub-core/*.json, tools/validate.py
+- pytest.ini ; edited ci.yml ; edited tests/test_stack_health.py
+- .github/CODEOWNERS
+- .github/pull_request_template.md
+- .github/ISSUE_TEMPLATE/bug_report.md
+- .github/ISSUE_TEMPLATE/feature_request.md
+=================================
